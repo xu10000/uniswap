@@ -1,0 +1,17 @@
+{
+  "main": "./contracts/UniswapV2Factory.sol",
+  "deploy": "./build/contracts/UniswapV2Factory.json",
+  "framework": "truffle-docker",
+  "npmClient": "yarn",
+  "compilers": {
+    "truffle": "v5.4.3",
+    "solc": "0.5.16",
+    "evmVersion": "istanbul"
+  },
+  "linter": "solhint",
+  "editor": {
+    "fontFamily": "Hack",
+    "fontSize": "13px",
+    "ligatures": false
+  }
+}

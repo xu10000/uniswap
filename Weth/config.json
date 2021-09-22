@@ -1,0 +1,17 @@
+{
+  "main": "./contracts/Weth.sol",
+  "deploy": "./build/contracts/Weth.json",
+  "framework": "truffle-docker",
+  "npmClient": "npm",
+  "compilers": {
+    "truffle": "v5.3.14",
+    "solc": "0.4.18",
+    "evmVersion": "istanbul"
+  },
+  "linter": "solhint",
+  "editor": {
+    "fontFamily": "Hack",
+    "fontSize": "13px",
+    "ligatures": false
+  }
+}
