@@ -65,7 +65,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     // 领取徽章
     function withdrawNtf(address to, unit256 level) {
         // owner直接发放
-        if(msg.sender == owner) {
+        if(msg.sender == owner && level != 0) {
             giveNft(to, level);
         }
         /** 查询是否达到领取条件 */ 
@@ -119,7 +119,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
             pledgeLevel = 6;
         }
         // 得到最后的等级
-        uint256 level = swapLevel > pledgeLevel?pledgeLevel: swapLevel;
+        uint256 _level = swapLevel > pledgeLevel?pledgeLevel: swapLevel;
         // 标志后续不可领了， 并记录质押量
         userPledgeArr[msg.sender].isPledge  = true;
         userPledgeArr[msg.sender].pledgeAmount = pledgeUsdAmount;
@@ -127,7 +127,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
         // 转账
         transferxxxxxxxxxxxXXXXX
         // 发放nft
-        giveNft(to, level);
+        giveNft(to, _level);
 
     }
     /**
