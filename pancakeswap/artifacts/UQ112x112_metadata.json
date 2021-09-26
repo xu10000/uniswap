@@ -14,7 +14,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"pancakeswap/factory.sol": "UQ112x112"
+			"pancakeswap/keypair.sol": "UQ112x112"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -25,11 +25,11 @@
 		"remappings": []
 	},
 	"sources": {
-		"pancakeswap/factory.sol": {
-			"keccak256": "0x449de5412e1edd40edf28208b98ff24ce6d2ff53a0ec07ce7df873008025de2c",
+		"pancakeswap/keypair.sol": {
+			"keccak256": "0xe5aee46d9de356901fc17b8d2413ed157f3eeef69d0c9ed84e851f38c43099ca",
 			"urls": [
-				"bzz-raw://aae9d99b602fc94be023b4f01abf91d4ccd6bf25104f58cda457069a14434459",
-				"dweb:/ipfs/QmTJyVF8k2AnPCtUbdpMkKgFU61gUc2isNtpjo179Y8SGw"
+				"bzz-raw://76996507479e1aca32e83ef70ba8abd7af01c70e1caae2963d2f69b2123a865b",
+				"dweb:/ipfs/QmaMzSHskVr7khD1JBbvunvBYR4dWNtcV3uCBMNuLo3pai"
 			]
 		}
 	},

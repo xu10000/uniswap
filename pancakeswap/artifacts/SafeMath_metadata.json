@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.6+commit.6c089d02"
+		"version": "0.5.16+commit.9c3226ce"
 	},
 	"language": "Solidity",
 	"output": {
@@ -14,13 +14,10 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"pancakeswap/router02.sol": "SafeMath"
+			"pancakeswap/keypair.sol": "SafeMath"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
-		"metadata": {
-			"bytecodeHash": "ipfs"
-		},
 		"optimizer": {
 			"enabled": true,
 			"runs": 200
@@ -28,11 +25,11 @@
 		"remappings": []
 	},
 	"sources": {
-		"pancakeswap/router02.sol": {
-			"keccak256": "0xb455ec9ff77b3c06ee393c3f010c77a1c1b6a5fd239a67f923c81c4375802d31",
+		"pancakeswap/keypair.sol": {
+			"keccak256": "0xe5aee46d9de356901fc17b8d2413ed157f3eeef69d0c9ed84e851f38c43099ca",
 			"urls": [
-				"bzz-raw://744ba2f842df61258e7810fda2a429de01fc3105933b0ddaf11b461b883297d2",
-				"dweb:/ipfs/Qmbt5mxe1PReXsBFDoEfHZQ3DfRRfZSL16rYqZ1VonrBpu"
+				"bzz-raw://76996507479e1aca32e83ef70ba8abd7af01c70e1caae2963d2f69b2123a865b",
+				"dweb:/ipfs/QmaMzSHskVr7khD1JBbvunvBYR4dWNtcV3uCBMNuLo3pai"
 			]
 		}
 	},

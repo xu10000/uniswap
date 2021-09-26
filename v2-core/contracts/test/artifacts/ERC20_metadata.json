@@ -375,10 +375,10 @@
 	},
 	"sources": {
 		"v2-core/contracts/UniswapV2ERC20.sol": {
-			"keccak256": "0xc06bf07af80b87e6ce03f4f7eb047a154dbdffdd2dc4040e2aeb0e3a21f75c36",
+			"keccak256": "0x1a06bfa2f5d416cc8f58d0b6bcc50db20d17e380ae9c91808a7fe0bf12ba8fb8",
 			"urls": [
-				"bzz-raw://b807403e8e54be80636231e549e4e0d032f549d3d165134b9c6e517e2269689d",
-				"dweb:/ipfs/QmPDicVT1RiFzR3ccdwcKLcprjdjoxeuC3u1LLrumHq9wj"
+				"bzz-raw://9cc20611c63fdfc37b9df401e3147f5a250a62edcc341e1b720af5d31eb4aebb",
+				"dweb:/ipfs/QmPABnst6tj1qhDW1aeXbrrqMZHKk19MQytVDF8GyxG31h"
 			]
 		},
 		"v2-core/contracts/interfaces/IUniswapV2ERC20.sol": {
