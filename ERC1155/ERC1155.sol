@@ -8,7 +8,7 @@ import "./extensions/IERC1155MetadataURI.sol";
 import "../../utils/Address.sol";
 import "../../utils/Context.sol";
 import "../../utils/introspection/ERC165.sol";
-
+import "./IUniswapV2Router01.sol";
 /**
  * @dev Implementation of the basic standard multi-token.
  * See https://eips.ethereum.org/EIPS/eip-1155
@@ -18,23 +18,118 @@ import "../../utils/introspection/ERC165.sol";
  */
 contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     using Address for address;
-
+    struct UserPledge {
+        bool isPledge; // 是否质押过
+        uint256 pledgeAmount; // 质押量
+        uint256 blockNumber; // 质押的高度
+    }
     // Mapping from token ID to account balances
     mapping(uint256 => mapping(address => uint256)) private _balances;
 
     // Mapping from account to operator approvals
     mapping(address => mapping(address => bool)) private _operatorApprovals;
-
+    // 用户质押信息
+    mapping(address => UserPledge) public userPledgeArr;
+    
     // Used as the URI for all token types by relying on ID substitution, e.g. https://token-cdn-domain/{id}.json
     string private _uri;
-
+    address public uniswapContract;
+    uint256 levelDecimal = 18;
+    uint256 public swapLevel1 = 10000*10**levelDecimal;
+    uint256 public swapLevel2 = 30000*10**levelDecimal;
+    uint256 public swapLevel3 = 50000*10**levelDecimal;
+    uint256 public swapLevel4 = 100000*10**levelDecimal; 
+    uint256 public swapLevel5 = 1000000*10**levelDecimal;
+    uint256 public swapLevel6 = 5000000*10**levelDecimal;
+    
+    uint256 public pledgeLevel1 = 300*10**levelDecimal;
+    uint256 public pledgeLevel2 = 1000*10**levelDecimal;
+    uint256 public pledgeLevel3 = 3000*10**levelDecimal;
+    uint256 public pledgeLevel4 = 5000*10**levelDecimal;
+    uint256 public pledgeLevel5 = 10000*10**levelDecimal;
+    uint256 public pledgeLevel6 = 20000*10**levelDecimal;
     /**
      * @dev See {_setURI}.
      */
-    constructor(string memory uri_) {
+    constructor(string memory uri_, address uniswapContract) {
         _setURI(uri_);
-    }
+        // 批量发行
+        _mintBatch
+        // 关联uniswap合约
+        uniswapContract = _uniswapContract;
+        // 
 
+    }
+    // 增发接口
+    // 取消质押  - lp质押36天！！！！
+    // 领取徽章
+    function withdrawNtf(address to, unit256 level) {
+        // owner直接发放
+        if(msg.sender == owner) {
+            giveNft(to, level);
+        }
+        /** 查询是否达到领取条件 */ 
+        uint256 swapUsdAmount;
+        uint256 pledgeUsdAmount;
+        uint256 liquidity;
+        (swapUsdAmount, pledgeUsdAmount, liquidity) = IUniswapV2Router01(uniswapContract).getUserInfo(msg.sender);
+        // 是否领取过了
+        require(userPledgeArr[msg.sender].isPledge == false, "already collected");
+        // 是否达到交易量和质押量
+        require(swapUsdAmount >= swapLevel1, "swapUsdAmount less than swapLevel1");
+        require(pledgeUsdAmount >= pledgeLevel1, "pledgeUsdAmount less than pledgeLevel1");
+        uint256 memory swapLevel = 0;
+        uint256 memory pledgeLevel = 0;
+        // 判断交易量
+        if (swapUsdAmount >= swapLevel1 && swapUsdAmount < swapLevel2) {
+            swapLevel = 1;
+        }
+        if (swapUsdAmount >= swapLevel2 && swapUsdAmount < swapLevel3) {
+            swapLevel = 2;
+        }
+        if (swapUsdAmount >= swapLevel3 && swapUsdAmount < swapLevel4) {
+            swapLevel = 3;
+        }
+        if (swapUsdAmount >= swapLevel4 && swapUsdAmount < swapLevel5) {
+            swapLevel = 4;
+        }
+        if (swapUsdAmount >= swapLevel5 && swapUsdAmount < swapLevel6) {
+            swapLevel = 5;
+        }
+        if (swapUsdAmount >= swapLevel6 ) {
+            swapLevel = 6;
+        }
+        // 判断质押量
+        if (pledgeUsdAmount >= pledgeLevel1 && pledgeUsdAmount < pledgeLevel2) {
+            pledgeLevel = 1;
+        }
+        if (pledgeUsdAmount >= pledgeLevel2 && pledgeUsdAmount < pledgeLevel3) {
+            pledgeLevel = 2;
+        }
+        if (pledgeUsdAmount >= pledgeLevel3 && pledgeUsdAmount < pledgeLevel4) {
+            pledgeLevel = 3;
+        }
+        if (pledgeUsdAmount >= pledgeLevel4 && pledgeUsdAmount < pledgeLevel5) {
+            pledgeLevel = 4;
+        }
+        if (pledgeUsdAmount >= pledgeLevel5 && pledgeUsdAmount < pledgeLevel6) {
+            pledgeLevel = 5;
+        }
+        if (pledgeUsdAmount >= pledgeLevel6 && level >= 6) {
+            pledgeLevel = 6;
+        }
+        // 得到最后的等级
+        uint256 level = swapLevel > pledgeLevel?pledgeLevel: swapLevel;
+        // 标志后续不可领了， 并记录质押量
+        userPledgeArr[msg.sender].isPledge  = true;
+        userPledgeArr[msg.sender].pledgeAmount = pledgeUsdAmount;
+        userPledgeArr[msg.sender].blockNumber = block.numberXXXXXXXX;
+        // 转账
+        transferxxxxxxxxxxxXXXXX
+        // 发放nft
+        giveNft(to, level);
+
+    }
     /**
      * @dev See {IERC165-supportsInterface}.
      */

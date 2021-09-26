@@ -973,6 +973,35 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "userArr",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "swapUsdAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pledgeUsdAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidity",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"stateMutability": "payable",
 				"type": "receive"
 			}
@@ -1022,10 +1051,10 @@
 			]
 		},
 		"v2-periphery/contracts/UniswapV2Router02.sol": {
-			"keccak256": "0xdba7687e3a07c7d56f395b365a393fc188f897fb8f7a60d3e385192a87336865",
+			"keccak256": "0x32983759a92079adc9c1cd1c41d8c7e4f83c926837dce6aaa062b63cdee78636",
 			"urls": [
-				"bzz-raw://76c594155d66f62ca8c40e8382812e82c0825addaedbaa9a737e326aab619279",
-				"dweb:/ipfs/QmZT3UAtpkVnNcThAic6erjEWCW5NpzQ2P61nfv9GUjR45"
+				"bzz-raw://ac60bdf08b1c8632fdd9c5089f36cc9052eec6f8bdcdfa26e326f6a8f0d4a6a4",
+				"dweb:/ipfs/QmPFmRHVNy3niHUMoDWJNjrzH7Bo9F5XvySD5pzo3ozy2R"
 			]
 		},
 		"v2-periphery/contracts/interfaces/IERC20.sol": {
