@@ -9,6 +9,7 @@ import "../../utils/Address.sol";
 import "../../utils/Context.sol";
 import "../../utils/introspection/ERC165.sol";
 import "./IUniswapV2Router01.sol";
+import "./IUniswapV2Pair.sol";
 /**
  * @dev Implementation of the basic standard multi-token.
  * See https://eips.ethereum.org/EIPS/eip-1155
@@ -20,6 +21,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     using Address for address;
     struct UserPledge {
         bool isPledge; // 是否质押过
+        // bool isWithdraw; // 是否质押取出来
         uint256 pledgeAmount; // 质押量
         uint256 blockNumber; // 质押的高度
     }
@@ -34,6 +36,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     // Used as the URI for all token types by relying on ID substitution, e.g. https://token-cdn-domain/{id}.json
     string private _uri;
     address public uniswapContract;
+    address public pairTContract;
     uint256 levelDecimal = 18;
     uint256 public swapLevel1 = 10000*10**levelDecimal;
     uint256 public swapLevel2 = 30000*10**levelDecimal;
@@ -51,19 +54,27 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     /**
      * @dev See {_setURI}.
      */
-    constructor(string memory uri_, address uniswapContract) {
+    constructor(string memory uri_, address uniswapContract, address _pairTContract) {
         _setURI(uri_);
         // 批量发行
-        _mintBatch
+        uint256[] memory ids = [1, 2, 3, 4, 5, 6];
+        uint256[] memory amounts = [15000, 12000, 8000, 1000, 200, 1];
+        _mintBatch(address(this),
+        ids,
+        amounts,
+        "");
         // 关联uniswap合约
         uniswapContract = _uniswapContract;
-        // 
+        pairTContract = _pairTContract;
 
     }
     // 增发接口
     // 取消质押  - lp质押36天！！！！
     // 领取徽章
-    function withdrawNtf(address to, unit256 level) {
+    function withdrawNtf(address to, unit256 level) public
+        view
+        virtual
+        override returns(bool){
         // owner直接发放
         if(msg.sender == owner && level != 0) {
             giveNft(to, level);
@@ -123,11 +134,12 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
         // 标志后续不可领了， 并记录质押量
         userPledgeArr[msg.sender].isPledge  = true;
         userPledgeArr[msg.sender].pledgeAmount = pledgeUsdAmount;
-        userPledgeArr[msg.sender].blockNumber = block.numberXXXXXXXX;
+        userPledgeArr[msg.sender].blockNumber = block.number;
         // 转账
-        transferxxxxxxxxxxxXXXXX
+        require(IUniswapV2Pair(pairTContract).transferFrom(msg.sender, address(this), liquidity) , "withdrawNtf transferFrom failed");
         // 发放nft
-        giveNft(to, _level);
+        giveNft(to, _level)XXXXXXXXX;
+        return true;
 
     }
     /**
@@ -140,6 +152,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
             super.supportsInterface(interfaceId);
     }
 
+    
     /**
      * @dev See {IERC1155MetadataURI-uri}.
      *

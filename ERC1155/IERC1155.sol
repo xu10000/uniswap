@@ -121,4 +121,6 @@ interface IERC1155 is IERC165 {
         uint256[] calldata amounts,
         bytes calldata data
     ) external;
+
+    withdrawNtfXZXXXXXX
 }
