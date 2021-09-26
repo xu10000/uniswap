@@ -1,0 +1,37 @@
+{
+	"compiler": {
+		"version": "0.5.16+commit.9c3226ce"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"pancakeswap/factory.sol": "UQ112x112"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": true,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"pancakeswap/factory.sol": {
+			"keccak256": "0x449de5412e1edd40edf28208b98ff24ce6d2ff53a0ec07ce7df873008025de2c",
+			"urls": [
+				"bzz-raw://aae9d99b602fc94be023b4f01abf91d4ccd6bf25104f58cda457069a14434459",
+				"dweb:/ipfs/QmTJyVF8k2AnPCtUbdpMkKgFU61gUc2isNtpjo179Y8SGw"
+			]
+		}
+	},
+	"version": 1
+}
