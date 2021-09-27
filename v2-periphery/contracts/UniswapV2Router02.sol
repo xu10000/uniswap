@@ -17,8 +17,8 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         uint256 liquidity;
     }
 
-    address public immutable override BUSDToken;
-    address public immutable override GEFToken;
+    address public immutable  BUSDToken;
+    address public immutable  GEFToken;
     address public immutable override factory;
     address public immutable override WETH;
     mapping(address => UserInfo) public userArr;
@@ -124,7 +124,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         TransferHelper.safeTransferFrom(tokenA, msg.sender, pair, amountA);
         TransferHelper.safeTransferFrom(tokenB, msg.sender, pair, amountB);
         liquidity = IUniswapV2Pair(pair).mint(to);
-        if (tokenA == BUSDToken && tokenB = GEFToken) {
+        if (tokenA == BUSDToken && tokenB == GEFToken) {
             userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
                 .pledgeUsdAmount
                 .add(amountADesired);
@@ -132,7 +132,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
                 liquidity
             );
         }
-        if (tokenA == GEFToken && tokenB = BUSDToken) {
+        if (tokenA == GEFToken && tokenB == BUSDToken) {
             userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
                 .pledgeUsdAmount
                 .add(amountBDesired);
@@ -210,7 +210,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
             amountB >= amountBMin,
             "UniswapV2Router: INSUFFICIENT_B_AMOUNT"
         );
-        if (tokenA == BUSDToken && tokenB = GEFToken) {
+        if (tokenA == BUSDToken && tokenB == GEFToken) {
             userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
                 .pledgeUsdAmount > amountA
                 ? userArr[msg.sender].pledgeUsdAmount.sub(amountA)
@@ -219,7 +219,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
                 liquidity
             );
         }
-        if (tokenA == GEFToken && tokenB = BUSDToken) {
+        if (tokenA == GEFToken && tokenB == BUSDToken) {
             userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
                 .pledgeUsdAmount > amountB
                 ? userArr[msg.sender].pledgeUsdAmount.sub(amountB)

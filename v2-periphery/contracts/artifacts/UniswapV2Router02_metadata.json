@@ -16,10 +16,46 @@
 						"internalType": "address",
 						"name": "_WETH",
 						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_BUSDToken",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_GEFToken",
+						"type": "address"
 					}
 				],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "BUSDToken",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "GEFToken",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
 			},
 			{
 				"inputs": [],
@@ -266,6 +302,35 @@
 						"internalType": "uint256[]",
 						"name": "amounts",
 						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "sender",
+						"type": "address"
+					}
+				],
+				"name": "getUserInfo",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "swapUsdAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "pledgeUsdAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "liquidity",
+						"type": "uint256"
 					}
 				],
 				"stateMutability": "view",
@@ -1051,10 +1116,10 @@
 			]
 		},
 		"v2-periphery/contracts/UniswapV2Router02.sol": {
-			"keccak256": "0x32983759a92079adc9c1cd1c41d8c7e4f83c926837dce6aaa062b63cdee78636",
+			"keccak256": "0x874529311b27327a6f344a3d6ba3c590e43c00a9e1369d79d842742d6f5e713f",
 			"urls": [
-				"bzz-raw://ac60bdf08b1c8632fdd9c5089f36cc9052eec6f8bdcdfa26e326f6a8f0d4a6a4",
-				"dweb:/ipfs/QmPFmRHVNy3niHUMoDWJNjrzH7Bo9F5XvySD5pzo3ozy2R"
+				"bzz-raw://7e7a3538111075be2235934b8c05783ed31aaf76c5112ceb18e8631f6af6cc97",
+				"dweb:/ipfs/QmNzPVNecKrYjve2rMXs4kXfg44gchBuDMV44ucGAS5r9A"
 			]
 		},
 		"v2-periphery/contracts/interfaces/IERC20.sol": {
@@ -1065,10 +1130,10 @@
 			]
 		},
 		"v2-periphery/contracts/interfaces/IUniswapV2Router01.sol": {
-			"keccak256": "0x8a3c5c449d4b7cd76513ed6995f4b86e4a86f222c770f8442f5fc128ce29b4d2",
+			"keccak256": "0xd77ba6323b5134b745200c3a355e822e2c3c360e575c845eead72a21a5cea90c",
 			"urls": [
-				"bzz-raw://1df63ca373dafae3bd0ee7fe70f890a1dc7c45ed869c01de68413e0e97ff9deb",
-				"dweb:/ipfs/QmefJgEYGUL8KX7kQKYTrDweF8GB7yjy3nw5Bmqzryg7PG"
+				"bzz-raw://a2371f8cebdc848c7c21441e54b8caa02e76d46a648d4e8c3fe7234125a62316",
+				"dweb:/ipfs/QmZ9euGCJKeZ8ispuNK1wzd627zVw23rBzCxX8gaH5HURT"
 			]
 		},
 		"v2-periphery/contracts/interfaces/IUniswapV2Router02.sol": {
@@ -1093,10 +1158,10 @@
 			]
 		},
 		"v2-periphery/contracts/libraries/UniswapV2Library.sol": {
-			"keccak256": "0x2787a6c5183e4d64bd4379dc66799b85d6e7fba631a0e32c480a63e17c57a2d5",
+			"keccak256": "0x15afeb4c7c41cce18aa22022596a3ce5f65049d97e79c22b192e8d8c1ccab90c",
 			"urls": [
-				"bzz-raw://b0ac31a38aeb5d5dc71898dbd39d4709bc9225a697e155bd05a09f13589ba40e",
-				"dweb:/ipfs/QmdbkbaDroUpwdhFhEQ5p5b4hdmcDLqf8X57b1j16LA4k5"
+				"bzz-raw://82eb6b8ad251af4c66dd55cde22621f2d1480a1f245408fe7c1e0148dc12c7f6",
+				"dweb:/ipfs/QmaJJuNsLq6Z5REYyFjLcG4au5CzJBEmhTW8hAAPWGz3xW"
 			]
 		}
 	},
