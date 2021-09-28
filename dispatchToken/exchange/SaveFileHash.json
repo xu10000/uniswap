@@ -1,0 +1,40 @@
+[
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "hash",
+				"type": "bytes32"
+			}
+		],
+		"name": "get",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "hash",
+				"type": "bytes32"
+			}
+		],
+		"name": "set",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]
