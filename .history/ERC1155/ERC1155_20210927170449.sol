@@ -10,7 +10,6 @@ import "./utils/Context.sol";
 import "./utils/introspection/ERC165.sol";
 import "./IUniswapV2Router01.sol";
 import "./IUniswapV2Pair.sol";
-import "./utils/ERC1155Holder.sol";
 
 /**
  * @dev Implementation of the basic standard multi-token.
@@ -19,13 +18,7 @@ import "./utils/ERC1155Holder.sol";
  *
  * _Available since v3.1._
  */
-contract ERC1155 is
-    Context,
-    ERC165,
-    IERC1155,
-    IERC1155MetadataURI,
-    ERC1155Holder
-{
+contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     using Address for address;
     struct UserPledge {
         bool isPledge; // 是否质押过
@@ -109,12 +102,10 @@ contract ERC1155 is
 
     // 取消质押  - lp质押36天！！！！
     function withdrawLpToken() public virtual override returns (bool) {
-        //  require(false, "cxxxxxxxxxx");
         require(
-            block.number > userPledgeArr[msg.sender].blockNumber + gapBlock,
+            block.number - gapBlock > userPledgeArr[msg.sender].blockNumber,
             "wait for gapBlock"
         );
-       
         require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
         uint256 amount = userPledgeArr[msg.sender].pledgeAmount;
         userPledgeArr[msg.sender].pledgeAmount = 0;
@@ -125,27 +116,6 @@ contract ERC1155 is
         return true;
     }
 
-    // function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
-    //     if (_i == 0) {
-    //         return "0";
-    //     }
-    //     uint j = _i;
-    //     uint len;
-    //     while (j != 0) {
-    //         len++;
-    //         j /= 10;
-    //     }
-    //     bytes memory bstr = new bytes(len);
-    //     uint k = len;
-    //     while (_i != 0) {
-    //         k = k-1;
-    //         uint8 temp = (48 + uint8(_i - _i / 10 * 10));
-    //         bytes1 b1 = bytes1(temp);
-    //         bstr[k] = b1;
-    //         _i /= 10;
-    //     }
-    //     return string(bstr);
-    // }
     // 领取徽章
     function withdrawNft(address to, uint256 level)
         public
@@ -216,14 +186,13 @@ contract ERC1155 is
         if (pledgeUsdAmount >= pledgeLevel5 && pledgeUsdAmount < pledgeLevel6) {
             pledgeLevel = 5;
         }
-        if (pledgeUsdAmount >= pledgeLevel6) {
+        if (pledgeUsdAmount >= pledgeLevel6 && level >= 6) {
             pledgeLevel = 6;
         }
-        // require(swapLevel < 0, uint2str(swapLevel));
-        // pledgeUsdAmount 1000000000000
+        require(swapLevel < 0, uint2str(swapLevel));
+        //  require(pledgeLevel<0,uint2str(pledgeLevel));
         // 得到最后的等级
         uint256 _level = swapLevel > pledgeLevel ? pledgeLevel : swapLevel;
-
         // 标志后续不可领了， 并记录质押量
         userPledgeArr[msg.sender].isPledge = true;
         userPledgeArr[msg.sender].pledgeAmount = pledgeUsdAmount;
@@ -237,8 +206,6 @@ contract ERC1155 is
             ),
             "withdrawNft transferFrom failed"
         );
-         require(_level>0, "_level = 0");
-
         // 发放nft
         giveNft(to, _level);
         return true;
@@ -256,7 +223,7 @@ contract ERC1155 is
         public
         view
         virtual
-        override(ERC165, IERC165,ERC1155Receiver)
+        override(ERC165, IERC165)
         returns (bool)
     {
         return
@@ -404,6 +371,49 @@ contract ERC1155 is
      * - If `to` refers to a smart contract, it must implement {IERC1155Receiver-onERC1155Received} and return the
      * acceptance magic value.
      */
+    function toAsciiString(address x) internal view returns (string memory) {
+        bytes memory s = new bytes(40);
+        for (uint256 i = 0; i < 20; i++) {
+            bytes1 b = bytes1(uint8(uint256(uint160(x)) / (2**(8 * (19 - i)))));
+            bytes1 hi = bytes1(uint8(b) / 16);
+            bytes1 lo = bytes1(uint8(b) - 16 * uint8(hi));
+            s[2 * i] = char(hi);
+            s[2 * i + 1] = char(lo);
+        }
+        return string(s);
+    }
+
+    function char(bytes1 b) internal view returns (bytes1 c) {
+        if (uint8(b) < 10) return bytes1(uint8(b) + 0x30);
+        else return bytes1(uint8(b) + 0x57);
+    }
+
+    function uint2str(uint256 _i)
+        internal
+        pure
+        returns (string memory _uintAsString)
+    {
+        if (_i == 0) {
+            return "0";
+        }
+        uint256 j = _i;
+        uint256 len;
+        while (j != 0) {
+            len++;
+            j /= 10;
+        }
+        bytes memory bstr = new bytes(len);
+        uint256 k = len;
+        while (_i != 0) {
+            k = k - 1;
+            uint8 temp = (48 + uint8(_i - (_i / 10) * 10));
+            bytes1 b1 = bytes1(temp);
+            bstr[k] = b1;
+            _i /= 10;
+        }
+        return string(bstr);
+    }
+
     function _safeTransferFrom(
         address from,
         address to,
@@ -425,9 +435,10 @@ contract ERC1155 is
         );
 
         uint256 fromBalance = _balances[id][from];
+        string memory x = uint2str(id);
         require(
-            fromBalance >= amount,
-            "ERC1155: insufficient balance for transfer"
+            fromBalance > 0, //fromBalance >= amount,
+            x
         );
         unchecked {
             _balances[id][from] = fromBalance - amount;
@@ -435,7 +446,7 @@ contract ERC1155 is
         _balances[id][to] += amount;
 
         emit TransferSingle(operator, from, to, id, amount);
-
+        // require(false, "xxxxxxxxx");
         _doSafeTransferAcceptanceCheck(operator, from, to, id, amount, data);
     }
 

@@ -5,12 +5,11 @@ pragma solidity ^0.8.0;
 import "./IERC1155.sol";
 import "./IERC1155Receiver.sol";
 import "./extensions/IERC1155MetadataURI.sol";
-import "./utils/Address.sol";
-import "./utils/Context.sol";
-import "./utils/introspection/ERC165.sol";
+import "../../utils/Address.sol";
+import "../../utils/Context.sol";
+import "../../utils/introspection/ERC165.sol";
 import "./IUniswapV2Router01.sol";
 import "./IUniswapV2Pair.sol";
-import "./utils/ERC1155Holder.sol";
 
 /**
  * @dev Implementation of the basic standard multi-token.
@@ -19,13 +18,7 @@ import "./utils/ERC1155Holder.sol";
  *
  * _Available since v3.1._
  */
-contract ERC1155 is
-    Context,
-    ERC165,
-    IERC1155,
-    IERC1155MetadataURI,
-    ERC1155Holder
-{
+contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
     using Address for address;
     struct UserPledge {
         bool isPledge; // 是否质押过
@@ -45,9 +38,8 @@ contract ERC1155 is
     string private _uri;
     address public owner;
     address public uniswapContract;
-    address public pairContract;
-    uint256 gapBlock = 5 * 20; // 36 * 24 * 60 * 20
-    uint256 levelDecimal = 2; // 18
+    address public pairTContract;
+    uint256 levelDecimal = 18;
     uint256 public swapLevel1 = 10000 * 10**levelDecimal;
     uint256 public swapLevel2 = 30000 * 10**levelDecimal;
     uint256 public swapLevel3 = 50000 * 10**levelDecimal;
@@ -67,88 +59,32 @@ contract ERC1155 is
      */
     constructor(
         string memory uri_,
-        address _uniswapContract,
-        address _pairContract
+        address uniswapContract,
+        address _pairTContract
     ) {
         _setURI(uri_);
         // 批量发行
-        uint256[] memory ids = new uint256[](6);
-        ids[0] = 1;
-        ids[1] = 2;
-        ids[2] = 3;
-        ids[3] = 4;
-        ids[4] = 5;
-        ids[5] = 6;
-        uint256[] memory amounts = new uint256[](6);
-        amounts[0] = 15000;
-        amounts[1] = 12000;
-        amounts[2] = 8000;
-        amounts[3] = 1000;
-        amounts[4] = 200;
-        amounts[5] = 1;
+        uint256[] memory ids = [1, 2, 3, 4, 5, 6];
+        uint256[] memory amounts = [15000, 12000, 8000, 1000, 200, 1];
         _mintBatch(address(this), ids, amounts, "");
         // 关联uniswap合约
         uniswapContract = _uniswapContract;
-        pairContract = _pairContract;
+        pairTContract = _pairTContract;
         owner = msg.sender;
     }
 
     // 增发接口
-    function increaseToken(uint256 id, uint256 amount)
-        public
-        virtual
-        override
-        returns (bool)
-    {
+    function increaseToken(uint256 memory id, uint256 memory amount) public{
         require(msg.sender == owner, "msg.sender != owner");
         //= [1, 2, 3, 4, 5, 6];
         // = [15000, 12000, 8000, 1000, 200, 1];
         _mint(address(this), id, amount, "");
-        return true;
     }
-
     // 取消质押  - lp质押36天！！！！
-    function withdrawLpToken() public virtual override returns (bool) {
-        //  require(false, "cxxxxxxxxxx");
-        require(
-            block.number > userPledgeArr[msg.sender].blockNumber + gapBlock,
-            "wait for gapBlock"
-        );
-       
-        require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
-        uint256 amount = userPledgeArr[msg.sender].pledgeAmount;
-        userPledgeArr[msg.sender].pledgeAmount = 0;
-        require(
-            IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
-            "withdrawNft transferFrom failed"
-        );
-        return true;
-    }
-
-    // function uint2str(uint _i) internal pure returns (string memory _uintAsString) {
-    //     if (_i == 0) {
-    //         return "0";
-    //     }
-    //     uint j = _i;
-    //     uint len;
-    //     while (j != 0) {
-    //         len++;
-    //         j /= 10;
-    //     }
-    //     bytes memory bstr = new bytes(len);
-    //     uint k = len;
-    //     while (_i != 0) {
-    //         k = k-1;
-    //         uint8 temp = (48 + uint8(_i - _i / 10 * 10));
-    //         bytes1 b1 = bytes1(temp);
-    //         bstr[k] = b1;
-    //         _i /= 10;
-    //     }
-    //     return string(bstr);
-    // }
     // 领取徽章
-    function withdrawNft(address to, uint256 level)
+    function withdrawNtf(address to, unit256 level)
         public
+        view
         virtual
         override
         returns (bool)
@@ -156,7 +92,6 @@ contract ERC1155 is
         // owner直接发放
         if (msg.sender == owner && level != 0) {
             giveNft(to, level);
-            return true;
         }
         /** 查询是否达到领取条件 */
         uint256 swapUsdAmount;
@@ -179,8 +114,8 @@ contract ERC1155 is
             pledgeUsdAmount >= pledgeLevel1,
             "pledgeUsdAmount less than pledgeLevel1"
         );
-        uint256 swapLevel = 0;
-        uint256 pledgeLevel = 0;
+        uint256 memory swapLevel = 0;
+        uint256 memory pledgeLevel = 0;
         // 判断交易量
         if (swapUsdAmount >= swapLevel1 && swapUsdAmount < swapLevel2) {
             swapLevel = 1;
@@ -216,36 +151,30 @@ contract ERC1155 is
         if (pledgeUsdAmount >= pledgeLevel5 && pledgeUsdAmount < pledgeLevel6) {
             pledgeLevel = 5;
         }
-        if (pledgeUsdAmount >= pledgeLevel6) {
+        if (pledgeUsdAmount >= pledgeLevel6 && level >= 6) {
             pledgeLevel = 6;
         }
-        // require(swapLevel < 0, uint2str(swapLevel));
-        // pledgeUsdAmount 1000000000000
         // 得到最后的等级
         uint256 _level = swapLevel > pledgeLevel ? pledgeLevel : swapLevel;
-
         // 标志后续不可领了， 并记录质押量
         userPledgeArr[msg.sender].isPledge = true;
         userPledgeArr[msg.sender].pledgeAmount = pledgeUsdAmount;
         userPledgeArr[msg.sender].blockNumber = block.number;
         // 转账
         require(
-            IUniswapV2Pair(pairContract).transferFrom(
+            IUniswapV2Pair(pairTContract).transferFrom(
                 msg.sender,
                 address(this),
                 liquidity
             ),
-            "withdrawNft transferFrom failed"
+            "withdrawNtf transferFrom failed"
         );
-         require(_level>0, "_level = 0");
-
         // 发放nft
         giveNft(to, _level);
         return true;
     }
 
     function giveNft(address to, uint256 id) internal {
-        //   require(id == 6, "xxxxxxxxxxx");
         _safeTransferFrom(address(this), to, id, 1, "");
     }
 
@@ -256,7 +185,7 @@ contract ERC1155 is
         public
         view
         virtual
-        override(ERC165, IERC165,ERC1155Receiver)
+        override(ERC165, IERC165)
         returns (bool)
     {
         return

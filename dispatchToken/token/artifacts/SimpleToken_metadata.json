@@ -399,10 +399,10 @@
 			]
 		},
 		"dispatchToken/token/SimpleToken.sol": {
-			"keccak256": "0x75e20aa37477e6e0986bd67d39e14c048910d6ebd3048f39a36b76150a42aabb",
+			"keccak256": "0x96010171b9126283a19302e28e4c02306eca4f63085788c10801914f868539e7",
 			"urls": [
-				"bzz-raw://16e271cee10fb7a0a4c355557cc607670c9be51ce9ba5fe023d01d71346daeab",
-				"dweb:/ipfs/QmdWLL2oKfuWeJQbn7ukzbEsScai5RpGMuW9LkzcPs5pN7"
+				"bzz-raw://7addb827877fe736666a949ca149a7e0705f53cc57f631329fbbb92b2eecd4df",
+				"dweb:/ipfs/QmPk6RbggPcfQSTo2S1z1bG4i4PwCMyAfHSzZRU2Tbi5k6"
 			]
 		}
 	},

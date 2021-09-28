@@ -3,7 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "../IERC1155Receiver.sol";
-import "./introspection/ERC165.sol";
+import "./utils/introspection/ERC165.sol";
 
 /**
  * @dev _Available since v3.1._

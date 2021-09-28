@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.7+commit.e28d00a7"
+		"version": "0.8.8+commit.dddeac2f"
 	},
 	"language": "Solidity",
 	"output": {
@@ -238,6 +238,84 @@
 					}
 				],
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onERC1155BatchReceived",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bytes",
+						"name": "",
+						"type": "bytes"
+					}
+				],
+				"name": "onERC1155Received",
+				"outputs": [
+					{
+						"internalType": "bytes4",
+						"name": "",
+						"type": "bytes4"
+					}
+				],
+				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -681,11 +759,11 @@
 	},
 	"sources": {
 		"ERC1155/ERC1155.sol": {
-			"keccak256": "0x080e6a612e1ebf4837419fefc2fbc382c3d02257c243b475f9960246afdbd0af",
+			"keccak256": "0x6d98cdbca0c277b811713183a79cf482340928b0796d21a62ee9bb6e4b7c02ab",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d19e6cf9ef2e1f431658c732caa74771351efaa99d9d856379e646dc482fccb6",
-				"dweb:/ipfs/QmX7vXJgCsEch2uQ6rKGQoRxfNE7mxjmNdEGZWLSpCy3v6"
+				"bzz-raw://2de72a84f2975bec83143fb8e33572b211c8ef5dc0cf526d9e3105c6270bc1a3",
+				"dweb:/ipfs/QmWiKg8BRPVsi3PGwoEqf4WoqTAnRQJrZybZKYzb47p7ph"
 			]
 		},
 		"ERC1155/IERC1155.sol": {
@@ -740,6 +818,22 @@
 			"urls": [
 				"bzz-raw://26e8b38a7ac8e7b4463af00cf7fff1bf48ae9875765bf4f7751e100124d0bc8c",
 				"dweb:/ipfs/QmWcsmkVr24xmmjfnBQZoemFniXjj3vwT78Cz6uqZW1Hux"
+			]
+		},
+		"ERC1155/utils/ERC1155Holder.sol": {
+			"keccak256": "0x4716e860c041e651d2f2486399ea5a49ec12289e91b2763991a2fa3a70772acf",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://80530019b488d859b57c411defccf2f5dbc6fba21f32f93b7f07be074097ff87",
+				"dweb:/ipfs/QmdYDwbeJN4YZmPrzDG28AbHnvFLkx4GKMujEAtVEXtsJd"
+			]
+		},
+		"ERC1155/utils/ERC1155Receiver.sol": {
+			"keccak256": "0x0ccf070200cf22a138ebd99c30e69390d89db5e2c861209d9f3fb27289bde19b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://c13034edfabe143e7737d62810c14300c46ce3cbd8ee437b61f7e17ca199eda4",
+				"dweb:/ipfs/QmeG2njq8k5BJqE6WSyLUptFDZEH3QZTJr5HxbzHo7Qwk4"
 			]
 		},
 		"ERC1155/utils/introspection/ERC165.sol": {

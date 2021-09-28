@@ -109,12 +109,10 @@ contract ERC1155 is
 
     // 取消质押  - lp质押36天！！！！
     function withdrawLpToken() public virtual override returns (bool) {
-        //  require(false, "cxxxxxxxxxx");
         require(
-            block.number > userPledgeArr[msg.sender].blockNumber + gapBlock,
+            block.number - gapBlock > userPledgeArr[msg.sender].blockNumber,
             "wait for gapBlock"
         );
-       
         require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
         uint256 amount = userPledgeArr[msg.sender].pledgeAmount;
         userPledgeArr[msg.sender].pledgeAmount = 0;
@@ -237,7 +235,7 @@ contract ERC1155 is
             ),
             "withdrawNft transferFrom failed"
         );
-         require(_level>0, "_level = 0");
+        //  require(pledgeLevel<0, uint2str(_level));
 
         // 发放nft
         giveNft(to, _level);
@@ -256,7 +254,7 @@ contract ERC1155 is
         public
         view
         virtual
-        override(ERC165, IERC165,ERC1155Receiver)
+        override(ERC165, IERC165)
         returns (bool)
     {
         return
