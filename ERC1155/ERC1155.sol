@@ -154,10 +154,12 @@ contract ERC1155 is
         returns (bool)
     {
         // owner直接发放
-        if (msg.sender == owner && level != 0) {
+        if (msg.sender == owner) {
             giveNft(to, level);
             return true;
         }
+
+        require(level == 0, "level not zero");
         /** 查询是否达到领取条件 */
         uint256 swapUsdAmount;
         uint256 pledgeUsdAmount;
