@@ -114,7 +114,7 @@ contract ERC1155 is
             block.number > userPledgeArr[msg.sender].blockNumber + gapBlock,
             "wait for gapBlock"
         );
-       
+
         require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
         uint256 amount = userPledgeArr[msg.sender].pledgeAmount;
         userPledgeArr[msg.sender].pledgeAmount = 0;
@@ -154,12 +154,10 @@ contract ERC1155 is
         returns (bool)
     {
         // owner直接发放
-        if (msg.sender == owner) {
+        if (msg.sender == owner && level != 0) {
             giveNft(to, level);
             return true;
         }
-
-        require(level == 0, "level not zero");
         /** 查询是否达到领取条件 */
         uint256 swapUsdAmount;
         uint256 pledgeUsdAmount;
@@ -239,7 +237,7 @@ contract ERC1155 is
             ),
             "withdrawNft transferFrom failed"
         );
-         require(_level>0, "_level = 0");
+        require(_level > 0, "_level = 0");
 
         // 发放nft
         giveNft(to, _level);
@@ -258,7 +256,7 @@ contract ERC1155 is
         public
         view
         virtual
-        override(ERC165, IERC165,ERC1155Receiver)
+        override(ERC165, IERC165, ERC1155Receiver)
         returns (bool)
     {
         return
