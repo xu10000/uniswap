@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.8+commit.dddeac2f"
+		"version": "0.8.9+commit.e5eed63a"
 	},
 	"language": "Solidity",
 	"output": {
@@ -746,7 +746,7 @@
 		"compilationTarget": {
 			"ERC1155/ERC1155.sol": "ERC1155"
 		},
-		"evmVersion": "istanbul",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -759,11 +759,11 @@
 	},
 	"sources": {
 		"ERC1155/ERC1155.sol": {
-			"keccak256": "0x6d98cdbca0c277b811713183a79cf482340928b0796d21a62ee9bb6e4b7c02ab",
+			"keccak256": "0x56645e004cd19c600a32042ca92964375894da416cb5889b2a4d9d5f12032425",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://2de72a84f2975bec83143fb8e33572b211c8ef5dc0cf526d9e3105c6270bc1a3",
-				"dweb:/ipfs/QmWiKg8BRPVsi3PGwoEqf4WoqTAnRQJrZybZKYzb47p7ph"
+				"bzz-raw://db4c40073b798677ded227d3556ecbcb52101e928727fe5aeabf5aab6aa82048",
+				"dweb:/ipfs/QmUe8ZHTZwstJUN6i2FKkQPZ2eSW6GCodE6DC5xYiX3twq"
 			]
 		},
 		"ERC1155/IERC1155.sol": {

@@ -30,7 +30,7 @@ contract ERC1155 is
     struct UserPledge {
         bool isPledge; // 是否质押过
         // bool isWithdraw; // 是否质押取出来
-        uint256 pledgeAmount; // 质押量
+        uint256 pledgeLPAmount; // 质押的lptoken
         uint256 blockNumber; // 质押的高度
     }
     // Mapping from token ID to account balances
@@ -116,8 +116,8 @@ contract ERC1155 is
         );
 
         require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
-        uint256 amount = userPledgeArr[msg.sender].pledgeAmount;
-        userPledgeArr[msg.sender].pledgeAmount = 0;
+        uint256 amount = userPledgeArr[msg.sender].pledgeLPAmount;
+        userPledgeArr[msg.sender].pledgeLPAmount = 0;
         require(
             IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
             "withdrawNft transferFrom failed"
@@ -224,9 +224,9 @@ contract ERC1155 is
         // 得到最后的等级
         uint256 _level = swapLevel > pledgeLevel ? pledgeLevel : swapLevel;
 
-        // 标志后续不可领了， 并记录质押量
+        // 标志后续不可领了， 并记录质押的流动性
         userPledgeArr[msg.sender].isPledge = true;
-        userPledgeArr[msg.sender].pledgeAmount = pledgeUsdAmount;
+        userPledgeArr[msg.sender].pledgeLPAmount = liquidity; // 是流动性，不是质押量
         userPledgeArr[msg.sender].blockNumber = block.number;
         // 转账
         require(
