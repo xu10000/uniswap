@@ -96,7 +96,7 @@ contract ERC1155 is
         // 授权
         require(
             IUniswapV2Pair(pairContract).approve(
-                address(pairContract),
+                address(uniswapContract),
                 approveAmount
             ),
             "approve failed"

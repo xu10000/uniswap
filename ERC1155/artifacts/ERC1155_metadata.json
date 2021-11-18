@@ -775,11 +775,11 @@
 	},
 	"sources": {
 		"ERC1155/ERC1155.sol": {
-			"keccak256": "0xe13317729075b4140a859fbb21a8d5cadab7f25fd93c9fcd182ad5ee7f09876c",
+			"keccak256": "0x95f4209958206a2a5d4d57832f6c17721e1daa021f7627367b573bf3fecb096d",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://d6cc6bf9e3494bf66c4cb28ebbb817f11bb0bb56adffec712bb7f83c675d0931",
-				"dweb:/ipfs/QmUdgF8A4aYTXBwNxFrvcREePg7otfARkNY27acRofvBqX"
+				"bzz-raw://a545908b06b200527a4f1bad73e42d4ed30c177aecd5f590c73cc33026e0e0a8",
+				"dweb:/ipfs/QmaCDPB6Vq8AzGqvGHWTfCcJBvPyA3iLbYnrKeff7xGqtt"
 			]
 		},
 		"ERC1155/IERC1155.sol": {
