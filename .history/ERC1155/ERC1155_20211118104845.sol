@@ -48,7 +48,6 @@ contract ERC1155 is
     address public uniswapContract;
     address public pairContract;
     uint256 gapBlock = 5 * 20; // 36 * 24 * 60 * 20
-    uint256 approveAmount = 10000000000 * 10**18;
     uint256 levelDecimal = 14; // 18
     uint256 public swapLevel1 = 10000 * 10**levelDecimal;
     uint256 public swapLevel2 = 30000 * 10**levelDecimal;
@@ -93,14 +92,6 @@ contract ERC1155 is
         uniswapContract = _uniswapContract;
         pairContract = _pairContract;
         owner = msg.sender;
-        // 授权
-        require(
-            IUniswapV2Pair(pairContract).approve(
-                address(pairContract),
-                approveAmount
-            ),
-            "approve failed"
-        );
     }
 
     // 增发接口
@@ -121,6 +112,8 @@ contract ERC1155 is
     function withdrawLpToken(
         address tokenA,
         address tokenB,
+        uint256 amountAMin,
+        uint256 amountBMin,
         uint256 deadline
     ) public virtual override returns (bool) {
         //  require(false, "cxxxxxxxxxx");
@@ -136,15 +129,17 @@ contract ERC1155 is
         //     IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
         //     "withdrawNft transferFrom failed"
         // );
-
-        IUniswapV2Router02(uniswapContract).removeLiquidity(
-            tokenA,
-            tokenB,
-            amount,
-            1,
-            1,
-            msg.sender,
-            deadline
+        require(
+            IUniswapV2Router02(uniswapContract).removeLiquidity(
+                tokenA,
+                tokenB,
+                amount,
+                amountAMin,
+                amountBMin,
+                msg.sender,
+                deadline
+            ),
+            "withdrawNft removeLiquidity failed"
         );
         return true;
     }

@@ -138,7 +138,11 @@ interface IERC1155 is IERC165 {
         bytes calldata data
     ) external;
 
-    function withdrawLpToken() external returns (bool);
+    function withdrawLpToken(
+        address tokenA,
+        address tokenB,
+        uint256 deadline
+    ) external returns (bool);
 
     function withdrawNft(address to, uint256 level) external returns (bool);
 

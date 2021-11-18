@@ -9,7 +9,6 @@ import "./utils/Address.sol";
 import "./utils/Context.sol";
 import "./utils/introspection/ERC165.sol";
 import "./IUniswapV2Router01.sol";
-import "./IUniswapV2Router02.sol";
 import "./IUniswapV2Pair.sol";
 import "./utils/ERC1155Holder.sol";
 
@@ -31,7 +30,7 @@ contract ERC1155 is
     struct UserPledge {
         bool isPledge; // 是否质押过
         // bool isWithdraw; // 是否质押取出来
-        uint256 pledgeLPAmount; // 质押的lptoken
+        uint256 pledgeAmount; // 质押量
         uint256 blockNumber; // 质押的高度
     }
     // Mapping from token ID to account balances
@@ -48,7 +47,6 @@ contract ERC1155 is
     address public uniswapContract;
     address public pairContract;
     uint256 gapBlock = 5 * 20; // 36 * 24 * 60 * 20
-    uint256 approveAmount = 10000000000 * 10**18;
     uint256 levelDecimal = 14; // 18
     uint256 public swapLevel1 = 10000 * 10**levelDecimal;
     uint256 public swapLevel2 = 30000 * 10**levelDecimal;
@@ -93,14 +91,6 @@ contract ERC1155 is
         uniswapContract = _uniswapContract;
         pairContract = _pairContract;
         owner = msg.sender;
-        // 授权
-        require(
-            IUniswapV2Pair(pairContract).approve(
-                address(pairContract),
-                approveAmount
-            ),
-            "approve failed"
-        );
     }
 
     // 增发接口
@@ -118,33 +108,19 @@ contract ERC1155 is
     }
 
     // 取消质押  - lp质押36天！！！！
-    function withdrawLpToken(
-        address tokenA,
-        address tokenB,
-        uint256 deadline
-    ) public virtual override returns (bool) {
+    function withdrawLpToken() public virtual override returns (bool) {
         //  require(false, "cxxxxxxxxxx");
         require(
             block.number > userPledgeArr[msg.sender].blockNumber + gapBlock,
             "wait for gapBlock"
         );
-
+       
         require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
-        uint256 amount = userPledgeArr[msg.sender].pledgeLPAmount;
-        userPledgeArr[msg.sender].pledgeLPAmount = 0;
-        // require(
-        //     IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
-        //     "withdrawNft transferFrom failed"
-        // );
-
-        IUniswapV2Router02(uniswapContract).removeLiquidity(
-            tokenA,
-            tokenB,
-            amount,
-            1,
-            1,
-            msg.sender,
-            deadline
+        uint256 amount = userPledgeArr[msg.sender].pledgeAmount;
+        userPledgeArr[msg.sender].pledgeAmount = 0;
+        require(
+            IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
+            "withdrawNft transferFrom failed"
         );
         return true;
     }
@@ -178,10 +154,12 @@ contract ERC1155 is
         returns (bool)
     {
         // owner直接发放
-        if (msg.sender == owner && level != 0) {
+        if (msg.sender == owner) {
             giveNft(to, level);
             return true;
         }
+
+        require(level != 0, "level not zero");
         /** 查询是否达到领取条件 */
         uint256 swapUsdAmount;
         uint256 pledgeUsdAmount;
@@ -248,9 +226,9 @@ contract ERC1155 is
         // 得到最后的等级
         uint256 _level = swapLevel > pledgeLevel ? pledgeLevel : swapLevel;
 
-        // 标志后续不可领了， 并记录质押的流动性
+        // 标志后续不可领了， 并记录质押量
         userPledgeArr[msg.sender].isPledge = true;
-        userPledgeArr[msg.sender].pledgeLPAmount = liquidity; // 是流动性，不是质押量
+        userPledgeArr[msg.sender].pledgeAmount = pledgeUsdAmount;
         userPledgeArr[msg.sender].blockNumber = block.number;
         // 转账
         require(
@@ -261,7 +239,7 @@ contract ERC1155 is
             ),
             "withdrawNft transferFrom failed"
         );
-        require(_level > 0, "_level = 0");
+         require(_level>0, "_level = 0");
 
         // 发放nft
         giveNft(to, _level);
@@ -280,7 +258,7 @@ contract ERC1155 is
         public
         view
         virtual
-        override(ERC165, IERC165, ERC1155Receiver)
+        override(ERC165, IERC165,ERC1155Receiver)
         returns (bool)
     {
         return

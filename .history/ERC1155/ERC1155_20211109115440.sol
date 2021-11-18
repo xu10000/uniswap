@@ -9,7 +9,6 @@ import "./utils/Address.sol";
 import "./utils/Context.sol";
 import "./utils/introspection/ERC165.sol";
 import "./IUniswapV2Router01.sol";
-import "./IUniswapV2Router02.sol";
 import "./IUniswapV2Pair.sol";
 import "./utils/ERC1155Holder.sol";
 
@@ -48,7 +47,6 @@ contract ERC1155 is
     address public uniswapContract;
     address public pairContract;
     uint256 gapBlock = 5 * 20; // 36 * 24 * 60 * 20
-    uint256 approveAmount = 10000000000 * 10**18;
     uint256 levelDecimal = 14; // 18
     uint256 public swapLevel1 = 10000 * 10**levelDecimal;
     uint256 public swapLevel2 = 30000 * 10**levelDecimal;
@@ -93,14 +91,6 @@ contract ERC1155 is
         uniswapContract = _uniswapContract;
         pairContract = _pairContract;
         owner = msg.sender;
-        // 授权
-        require(
-            IUniswapV2Pair(pairContract).approve(
-                address(pairContract),
-                approveAmount
-            ),
-            "approve failed"
-        );
     }
 
     // 增发接口
@@ -118,11 +108,7 @@ contract ERC1155 is
     }
 
     // 取消质押  - lp质押36天！！！！
-    function withdrawLpToken(
-        address tokenA,
-        address tokenB,
-        uint256 deadline
-    ) public virtual override returns (bool) {
+    function withdrawLpToken() public virtual override returns (bool) {
         //  require(false, "cxxxxxxxxxx");
         require(
             block.number > userPledgeArr[msg.sender].blockNumber + gapBlock,
@@ -132,19 +118,9 @@ contract ERC1155 is
         require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
         uint256 amount = userPledgeArr[msg.sender].pledgeLPAmount;
         userPledgeArr[msg.sender].pledgeLPAmount = 0;
-        // require(
-        //     IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
-        //     "withdrawNft transferFrom failed"
-        // );
-
-        IUniswapV2Router02(uniswapContract).removeLiquidity(
-            tokenA,
-            tokenB,
-            amount,
-            1,
-            1,
-            msg.sender,
-            deadline
+        require(
+            IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
+            "withdrawNft transferFrom failed"
         );
         return true;
     }
