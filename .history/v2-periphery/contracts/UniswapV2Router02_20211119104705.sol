@@ -214,16 +214,16 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
             userArr[to].pledgeUsdAmount = userArr[to].pledgeUsdAmount > amountA
                 ? userArr[to].pledgeUsdAmount.sub(amountA)
                 : 0;
+            userArr[to].liquidity = userArr[to].liquidity > liquidity
+                ? userArr[to].liquidity.sub(liquidity)
+                : 0;
         }
         if (tokenA == GEFToken && tokenB == BUSDToken) {
             userArr[to].pledgeUsdAmount = userArr[to].pledgeUsdAmount > amountB
                 ? userArr[to].pledgeUsdAmount.sub(amountB)
                 : 0;
+            userArr[to].liquidity = userArr[to].liquidity.sub(liquidity);
         }
-
-        userArr[to].liquidity = userArr[to].liquidity > liquidity
-            ? userArr[to].liquidity.sub(liquidity)
-            : 0;
     }
 
     function removeLiquidityETH(

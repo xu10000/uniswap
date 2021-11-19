@@ -17,8 +17,8 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         uint256 liquidity;
     }
 
-    address public immutable BUSDToken;
-    address public immutable GEFToken;
+    address public immutable  BUSDToken;
+    address public immutable  GEFToken;
     address public immutable override factory;
     address public immutable override WETH;
     mapping(address => UserInfo) public userArr;
@@ -197,33 +197,37 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
     {
         address pair = UniswapV2Library.pairFor(factory, tokenA, tokenB);
         IUniswapV2Pair(pair).transferFrom(msg.sender, pair, liquidity); // send liquidity to pair
-        (uint256 amount0, uint256 amount1) = IUniswapV2Pair(pair).burn(to);
-        (address token0, ) = UniswapV2Library.sortTokens(tokenA, tokenB);
-        (amountA, amountB) = tokenA == token0
-            ? (amount0, amount1)
-            : (amount1, amount0);
-        require(
-            amountA >= amountAMin,
-            "UniswapV2Router: INSUFFICIENT_A_AMOUNT"
-        );
-        require(
-            amountB >= amountBMin,
-            "UniswapV2Router: INSUFFICIENT_B_AMOUNT"
-        );
-        if (tokenA == BUSDToken && tokenB == GEFToken) {
-            userArr[to].pledgeUsdAmount = userArr[to].pledgeUsdAmount > amountA
-                ? userArr[to].pledgeUsdAmount.sub(amountA)
-                : 0;
-        }
-        if (tokenA == GEFToken && tokenB == BUSDToken) {
-            userArr[to].pledgeUsdAmount = userArr[to].pledgeUsdAmount > amountB
-                ? userArr[to].pledgeUsdAmount.sub(amountB)
-                : 0;
-        }
-
-        userArr[to].liquidity = userArr[to].liquidity > liquidity
-            ? userArr[to].liquidity.sub(liquidity)
-            : 0;
+        // (uint256 amount0, uint256 amount1) = IUniswapV2Pair(pair).burn(to);
+        // (address token0, ) = UniswapV2Library.sortTokens(tokenA, tokenB);
+        // (amountA, amountB) = tokenA == token0
+        //     ? (amount0, amount1)
+        //     : (amount1, amount0);
+        // require(
+        //     amountA >= amountAMin,
+        //     "UniswapV2Router: INSUFFICIENT_A_AMOUNT"
+        // );
+        // require(
+        //     amountB >= amountBMin,
+        //     "UniswapV2Router: INSUFFICIENT_B_AMOUNT"
+        // );
+        // if (tokenA == BUSDToken && tokenB == GEFToken) {
+        //     userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
+        //         .pledgeUsdAmount > amountA
+        //         ? userArr[msg.sender].pledgeUsdAmount.sub(amountA)
+        //         : 0;
+        //     userArr[msg.sender].liquidity = userArr[msg.sender].liquidity.sub(
+        //         liquidity
+        //     );
+        // }
+        // if (tokenA == GEFToken && tokenB == BUSDToken) {
+        //     userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
+        //         .pledgeUsdAmount > amountB
+        //         ? userArr[msg.sender].pledgeUsdAmount.sub(amountB)
+        //         : 0;
+        //     userArr[msg.sender].liquidity = userArr[msg.sender].liquidity.sub(
+        //         liquidity
+        //     );
+        // }
     }
 
     function removeLiquidityETH(

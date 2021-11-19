@@ -47,7 +47,7 @@ contract ERC1155 is
     address public owner;
     address public uniswapContract;
     address public pairContract;
-    uint256 gapBlock = 2 * 20; // 36 * 24 * 60 * 20
+    uint256 gapBlock = 5 * 20; // 36 * 24 * 60 * 20
     uint256 approveAmount = 10000000000 * 10**18;
     uint256 levelDecimal = 14; // 18
     uint256 public swapLevel1 = 10000 * 10**levelDecimal;
@@ -124,14 +124,14 @@ contract ERC1155 is
         uint256 deadline
     ) public virtual override returns (bool) {
         //  require(false, "cxxxxxxxxxx");
-        require(
-            block.number > userPledgeArr[msg.sender].blockNumber + gapBlock,
-            "wait for gapBlock"
-        );
+        // require(
+        //     block.number > userPledgeArr[msg.sender].blockNumber + gapBlock,
+        //     "wait for gapBlock"
+        // );
 
-        require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
+        // require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
         uint256 amount = userPledgeArr[msg.sender].pledgeLPAmount;
-        userPledgeArr[msg.sender].pledgeLPAmount = 0;
+        // userPledgeArr[msg.sender].pledgeLPAmount = 0;
         // require(
         //     IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
         //     "withdrawNft transferFrom failed"

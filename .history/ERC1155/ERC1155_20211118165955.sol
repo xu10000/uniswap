@@ -47,7 +47,7 @@ contract ERC1155 is
     address public owner;
     address public uniswapContract;
     address public pairContract;
-    uint256 gapBlock = 2 * 20; // 36 * 24 * 60 * 20
+    uint256 gapBlock = 5 * 20; // 36 * 24 * 60 * 20
     uint256 approveAmount = 10000000000 * 10**18;
     uint256 levelDecimal = 14; // 18
     uint256 public swapLevel1 = 10000 * 10**levelDecimal;

@@ -762,7 +762,7 @@
 		"compilationTarget": {
 			"ERC1155/ERC1155.sol": "ERC1155"
 		},
-		"evmVersion": "london",
+		"evmVersion": "istanbul",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -775,11 +775,11 @@
 	},
 	"sources": {
 		"ERC1155/ERC1155.sol": {
-			"keccak256": "0x95f4209958206a2a5d4d57832f6c17721e1daa021f7627367b573bf3fecb096d",
+			"keccak256": "0xef65b97072d5148b07b37af4d8e7f1561e10b59f25228eba257159d5df9baa19",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://a545908b06b200527a4f1bad73e42d4ed30c177aecd5f590c73cc33026e0e0a8",
-				"dweb:/ipfs/QmaCDPB6Vq8AzGqvGHWTfCcJBvPyA3iLbYnrKeff7xGqtt"
+				"bzz-raw://b5d61477c520961bac4d1808182654bbf70275ca204661801d5e964f2cf77e4a",
+				"dweb:/ipfs/QmWhdCXdU4ghtLTGwq3pPfXPgM6XpxKY6cfBvjcdxkuwcZ"
 			]
 		},
 		"ERC1155/IERC1155.sol": {

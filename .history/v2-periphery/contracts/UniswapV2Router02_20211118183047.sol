@@ -211,19 +211,23 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
             "UniswapV2Router: INSUFFICIENT_B_AMOUNT"
         );
         if (tokenA == BUSDToken && tokenB == GEFToken) {
-            userArr[to].pledgeUsdAmount = userArr[to].pledgeUsdAmount > amountA
-                ? userArr[to].pledgeUsdAmount.sub(amountA)
+            userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
+                .pledgeUsdAmount > amountA
+                ? userArr[msg.sender].pledgeUsdAmount.sub(amountA)
                 : 0;
+            userArr[msg.sender].liquidity = userArr[msg.sender].liquidity.sub(
+                liquidity
+            );
         }
         if (tokenA == GEFToken && tokenB == BUSDToken) {
-            userArr[to].pledgeUsdAmount = userArr[to].pledgeUsdAmount > amountB
-                ? userArr[to].pledgeUsdAmount.sub(amountB)
+            userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
+                .pledgeUsdAmount > amountB
+                ? userArr[msg.sender].pledgeUsdAmount.sub(amountB)
                 : 0;
+            userArr[msg.sender].liquidity = userArr[msg.sender].liquidity.sub(
+                liquidity
+            );
         }
-
-        userArr[to].liquidity = userArr[to].liquidity > liquidity
-            ? userArr[to].liquidity.sub(liquidity)
-            : 0;
     }
 
     function removeLiquidityETH(
