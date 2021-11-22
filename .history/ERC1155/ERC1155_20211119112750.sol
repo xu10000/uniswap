@@ -185,11 +185,13 @@ contract ERC1155 is
         /** 查询是否达到领取条件 */
         uint256 swapUsdAmount;
         uint256 pledgeUsdAmount;
-        uint256 _pledgeGefAmount;
         uint256 liquidity;
-        (swapUsdAmount, pledgeUsdAmount, _pledgeGefAmount, liquidity) = IUniswapV2Router01(
-            uniswapContract
-        ).getUserInfo(msg.sender);
+        (
+            swapUsdAmount,
+            pledgeUsdAmount,
+            _pledgeGefAmount,
+            liquidity
+        ) = IUniswapV2Router01(uniswapContract).getUserInfo(msg.sender);
         // 是否领取过了
         require(
             userPledgeArr[msg.sender].isPledge == false,

@@ -128,10 +128,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         if (tokenA == BUSDToken && tokenB == GEFToken) {
             userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
                 .pledgeUsdAmount
-                .add(amountA);
-            userArr[msg.sender].pledgeGefAmount = userArr[msg.sender]
-                .pledgeGefAmount
-                .add(amountB);
+                .add(amountADesired);
             userArr[msg.sender].liquidity = userArr[msg.sender].liquidity.add(
                 liquidity
             );
@@ -139,10 +136,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         if (tokenA == GEFToken && tokenB == BUSDToken) {
             userArr[msg.sender].pledgeUsdAmount = userArr[msg.sender]
                 .pledgeUsdAmount
-                .add(amountB);
-            userArr[msg.sender].pledgeGefAmount = userArr[msg.sender]
-                .pledgeGefAmount
-                .add(amountA);
+                .add(amountBDesired);
             userArr[msg.sender].liquidity = userArr[msg.sender].liquidity.add(
                 liquidity
             );
@@ -221,16 +215,10 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
             userArr[to].pledgeUsdAmount = userArr[to].pledgeUsdAmount > amountA
                 ? userArr[to].pledgeUsdAmount.sub(amountA)
                 : 0;
-            userArr[to].pledgeGefAmount = userArr[to].pledgeGefAmount > amountA
-                ? userArr[to].pledgeGefAmount.sub(amountB)
-                : 0;
         }
         if (tokenA == GEFToken && tokenB == BUSDToken) {
             userArr[to].pledgeUsdAmount = userArr[to].pledgeUsdAmount > amountB
                 ? userArr[to].pledgeUsdAmount.sub(amountB)
-                : 0;
-            userArr[to].pledgeGefAmount = userArr[to].pledgeGefAmount > amountA
-                ? userArr[to].pledgeGefAmount.sub(amountA)
                 : 0;
         }
 
@@ -764,14 +752,12 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
         returns (
             uint256 swapUsdAmount,
             uint256 pledgeUsdAmount,
-            uint256 pledgeGefAmount,
             uint256 liquidity
         )
     {
         return (
             userArr[sender].swapUsdAmount,
             userArr[sender].pledgeUsdAmount,
-            userArr[sender].pledgeGefAmount,
             userArr[sender].liquidity
         );
     }

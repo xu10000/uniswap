@@ -229,7 +229,7 @@ contract UniswapV2Router02 is IUniswapV2Router02 {
             userArr[to].pledgeUsdAmount = userArr[to].pledgeUsdAmount > amountB
                 ? userArr[to].pledgeUsdAmount.sub(amountB)
                 : 0;
-            userArr[to].pledgeGefAmount = userArr[to].pledgeGefAmount > amountA
+            serArr[to].pledgeGefAmount = userArr[to].pledgeGefAmount > amountA
                 ? userArr[to].pledgeGefAmount.sub(amountA)
                 : 0;
         }

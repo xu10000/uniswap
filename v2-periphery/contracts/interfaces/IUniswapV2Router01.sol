@@ -164,6 +164,7 @@ interface IUniswapV2Router01 {
         returns (
             uint256 swapUsdAmount,
             uint256 pledgeUsdAmount,
+            uint256 pledgeGefAmount,
             uint256 liquidity
         );
 }

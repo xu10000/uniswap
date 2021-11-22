@@ -775,11 +775,11 @@
 	},
 	"sources": {
 		"ERC1155/ERC1155.sol": {
-			"keccak256": "0xef65b97072d5148b07b37af4d8e7f1561e10b59f25228eba257159d5df9baa19",
+			"keccak256": "0x25c0d8277da5abe0010caa0b8a20424b02312e7b4da7c215e21f5ac787d4afa3",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b5d61477c520961bac4d1808182654bbf70275ca204661801d5e964f2cf77e4a",
-				"dweb:/ipfs/QmWhdCXdU4ghtLTGwq3pPfXPgM6XpxKY6cfBvjcdxkuwcZ"
+				"bzz-raw://77a582299eaff58eb59a2440a1a2144df7435118d7fa808bb21c6ed3b97c1e31",
+				"dweb:/ipfs/QmZVRcMkigraFMGZmjzkVu1ZCRN9iXoeBgKd8KCfz6Q5gm"
 			]
 		},
 		"ERC1155/IERC1155.sol": {
@@ -806,10 +806,10 @@
 			]
 		},
 		"ERC1155/IUniswapV2Router01.sol": {
-			"keccak256": "0xd77ba6323b5134b745200c3a355e822e2c3c360e575c845eead72a21a5cea90c",
+			"keccak256": "0xe4e9c46332baf3fa8a25b8926674f10c3cecb82012555579ed1c8e960d22810c",
 			"urls": [
-				"bzz-raw://a2371f8cebdc848c7c21441e54b8caa02e76d46a648d4e8c3fe7234125a62316",
-				"dweb:/ipfs/QmZ9euGCJKeZ8ispuNK1wzd627zVw23rBzCxX8gaH5HURT"
+				"bzz-raw://fea8b3829c4e2310d81b1c15e5550f97b70e3b998105925066593dbcdf82c07d",
+				"dweb:/ipfs/QmbDLheQQetwqy1W3BPHPNGE3Wbbs89JEwZU9SdDYoJ3H9"
 			]
 		},
 		"ERC1155/IUniswapV2Router02.sol": {
