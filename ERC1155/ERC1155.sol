@@ -94,13 +94,13 @@ contract ERC1155 is
         pairContract = _pairContract;
         owner = msg.sender;
         // 授权
-        require(
-            IUniswapV2Pair(pairContract).approve(
-                address(uniswapContract),
-                approveAmount
-            ),
-            "approve failed"
-        );
+        // require(
+        //     IUniswapV2Pair(pairContract).approve(
+        //         address(uniswapContract),
+        //         approveAmount
+        //     ),
+        //     "approve failed"
+        // );
     }
 
     // 增发接口
@@ -132,20 +132,20 @@ contract ERC1155 is
         require(userPledgeArr[msg.sender].isPledge, "isPledge need true");
         uint256 amount = userPledgeArr[msg.sender].pledgeLPAmount;
         userPledgeArr[msg.sender].pledgeLPAmount = 0;
-        // require(
-        //     IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
-        //     "withdrawNft transferFrom failed"
-        // );
-
-        IUniswapV2Router02(uniswapContract).removeLiquidity(
-            tokenA,
-            tokenB,
-            amount,
-            1,
-            1,
-            msg.sender,
-            deadline
+        require(
+            IUniswapV2Pair(pairContract).transfer(msg.sender, amount),
+            "withdrawNft transferFrom failed"
         );
+
+        // IUniswapV2Router02(uniswapContract).removeLiquidity(
+        //     tokenA,
+        //     tokenB,
+        //     amount,
+        //     1,
+        //     1,
+        //     msg.sender,
+        //     deadline
+        // );
         return true;
     }
 

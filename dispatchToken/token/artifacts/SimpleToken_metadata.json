@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.5.16+commit.9c3226ce"
+		"version": "0.5.17+commit.d19bba13"
 	},
 	"language": "Solidity",
 	"output": {
@@ -399,10 +399,10 @@
 			]
 		},
 		"dispatchToken/token/SimpleToken.sol": {
-			"keccak256": "0x96010171b9126283a19302e28e4c02306eca4f63085788c10801914f868539e7",
+			"keccak256": "0xd193272803c311c20d3ebf68ab35b41a2f7ad3e499672c99dff2e7f59d6346ff",
 			"urls": [
-				"bzz-raw://7addb827877fe736666a949ca149a7e0705f53cc57f631329fbbb92b2eecd4df",
-				"dweb:/ipfs/QmPk6RbggPcfQSTo2S1z1bG4i4PwCMyAfHSzZRU2Tbi5k6"
+				"bzz-raw://bf5d783c63cd5b09a5345976765c7d2ac46df96a6ab21b643a23e9cc34a5adb2",
+				"dweb:/ipfs/QmPuRyKjvQfCfH8rrcR5Xpb4fegd2amA5KaTiBBgDVkGJY"
 			]
 		}
 	},

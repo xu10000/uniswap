@@ -15,7 +15,8 @@ contract SimpleToken is Context, ERC20, ERC20Detailed {
     /**
      * @dev Constructor that gives _msgSender() all of existing tokens.
      */
-    constructor () public ERC20Detailed("GEF", "GEF", 18) {
-        _mint(_msgSender(), 910119900000000 * (10 ** uint256(decimals())));
+    constructor () public ERC20Detailed("AAB", "AAB", 18) {
+        _mint(_msgSender(), 999 * 100000000 * (10 ** uint256(decimals())));
     }
+    // increases()
 }
